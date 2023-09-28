@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 from torchvision import transforms
+import cv2
 
 from net.pspnet import PSPNet
 
@@ -90,7 +91,14 @@ def show_image(img, pred):
     img = denormalize(img.cpu().numpy(), [0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     img = img.transpose(1, 2, 0).reshape((h, w, 3))
     pred = pred.reshape((h, w))
+    
+    # Convert the NumPy array to a PIL image
+    pil_image = Image.fromarray(pred)
 
+    # Now you can use the 'pil_image' as a PIL image object
+    # For example, you can save it or display it
+    pil_image.save("output_image.png")
+    pil_image.show()
     # show image
     ax0.set_title('img')
     ax0.imshow(img)
