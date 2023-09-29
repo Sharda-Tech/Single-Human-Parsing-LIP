@@ -40,39 +40,40 @@ for i, image_filename in enumerate(image_filenames):
     contour_image = image.copy()
     #cv2.drawContours(contour_image, contours, -1, (0, 255, 0), 2)
     
-    for c in contours:
-        cv2.drawContours(contour_image, c, -1, (0, 255, 0), 2)
-        cv2.imshow('edge',contour_image)
-        cv2.waitKey(0)  
+    # for c in contours:
+    #     cv2.drawContours(contour_image, c, -1, (0, 255, 0), 2)
+    #     cv2.imshow('edge',contour_image)
+    #     cv2.waitKey(0)  
     # cv2.imshow('Canny Edges', edges)
-    cv2.imshow('edge',contour_image)
-    cv2.waitKey(0)
+    # cv2.imshow('edge',contour_image)
+    # cv2.waitKey(0)
 
-#     kernel = np.ones((15, 15), np.uint8)
-#     edges_dilated = cv2.dilate(edges, kernel, iterations=1)
+    kernel = np.ones((15, 15), np.uint8)
+    edges_dilated = cv2.dilate(edges, kernel, iterations=1)
 
-#     edge_image = np.zeros_like(image, dtype=np.uint8)
-#     edge_image[edges_dilated > 0] = 255
+    edge_image = np.zeros_like(image, dtype=np.uint8)
+    edge_image[edges_dilated > 0] = 255
 
 
-#     masked_image = np.logical_and(gray, edge_image[:,:,0]).astype(np.uint8)
-#     masked_image = (masked_image * (255.0 / masked_image.max())).astype(np.uint8)
+    masked_image = np.logical_and(gray, edge_image[:,:,0]).astype(np.uint8)
+    masked_image = (masked_image * (255.0 / masked_image.max())).astype(np.uint8)
 
-#     for row in range(masked_image.shape[0]):
-#         for col in range(masked_image.shape[1]):
-#             if masked_image[row, col] == 255:
-#                 # masked_image[row, col] = gray[row, col]
-#                 gray[row, col] = 0
+    for row in range(masked_image.shape[0]):
+        for col in range(masked_image.shape[1]):
+            if masked_image[row, col] == 255:
+                # masked_image[row, col] = gray[row, col]
+                gray[row, col] = 0
     
-#     # color_image = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
-#     # colored_gradient = cv2.applyColorMap(color_image, colormap)
-#     # cv2.imshow('masked_image',colored_gradient)
-#     # cv2.waitKey(0)
-#     # print("Unique values for image {}: {}".format(i+1, np.unique(masked_image)))
-#     # print(masked_image.shape)
-#     # print(gray.shape)
-
-#     ax.imshow(gray, cmap=color_map)
-#     plt.savefig(fname=os.path.join("./preprocessed",image_filename))
+    cv2.imwrite(os.path.join("./preprocessed",image_filename),gray)
+    # color_image = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
+    # colored_gradient = cv2.applyColorMap(color_image, colormap)
+    # cv2.imshow('masked_image',colored_gradient)
+    # cv2.waitKey(0)
+    # print("Unique values for image {}: {}".format(i+1, np.unique(masked_image)))
+    # print(masked_image.shape)
+    # print(gray.shape)
+    
+    #ax.imshow(gray, cmap=color_map)
+    #plt.savefig(fname=os.path.join("./preprocessed",image_filename))
 # plt.tight_layout()
 # plt.show()
