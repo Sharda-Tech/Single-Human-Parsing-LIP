@@ -97,6 +97,16 @@ def show_image(img, pred):
 
     # Now you can use the 'pil_image' as a PIL image object
     # For example, you can save it or display it
+    
+    output_array = np.array(pil_image)
+            
+    # Perform the multiplication by 255
+    output_array = output_array * 255
+
+    # Convert the NumPy array back to a PIL image
+    pil_image = Image.fromarray(output_array.astype('uint8'))
+
+    pil_image = pil_image.resize(img_size, Image.BICUBIC)
     pil_image.save("output_image.png")
     pil_image.show()
     # show image
