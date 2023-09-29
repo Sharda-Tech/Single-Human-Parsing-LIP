@@ -16,9 +16,9 @@ def main():
 
     for image_filename in os.listdir(args.image_folder):
         print(image_filename)
-        if 'person_mask' in image_filename: 
+        if 'person_mask' in image_filename and '_cleaned.png' not in image_filename: 
             save_filename = image_filename.split('.')[0] + '_cleaned.png'   
-            uploaded_image = Image.open(os.path.join('./from_here',image_filename)).convert("L")
+            uploaded_image = Image.open(os.path.join(args.image_folder,image_filename)).convert("L")
             image = cv2.cvtColor(np.array(uploaded_image), cv2.COLOR_RGB2BGR)
 
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -34,7 +34,7 @@ def main():
 
             # Draw the outer contours on a copy of the original image
             contour_image = image.copy()
-            kernel = np.ones((15, 15), np.uint8)
+            kernel = np.ones((5, 5), np.uint8)
             edges_dilated = cv2.dilate(edges, kernel, iterations=1)
 
             edge_image = np.zeros_like(image, dtype=np.uint8)
